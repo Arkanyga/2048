@@ -1,0 +1,291 @@
+@import url("https://fonts.googleapis.com/css?family=Fredoka+One");
+
+* {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  -khtml-user-drag: none;
+  -ms-user-drag: none;
+  box-sizing: border-box;
+}
+#playfield {
+  position: absolute;
+  top: 99px;
+  left: 99px;
+  width: 402px;
+  height: 402px;
+  z-index: 0;
+  background: gray;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.back {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: gray;
+  z-index: 0;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.cell {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: gray;
+  z-index: 0;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: black;
+  text-align: center;
+  font: 48px/96px "Fredoka One", cursive;
+
+}
+
+.t2 {
+  z-index: 1;
+  background: #e5fd5efb;
+
+}
+.t2:after {
+  z-index: 1;
+  content: "2";
+}
+.t4 {
+  z-index: 1;
+  background: #96fd20;
+}
+.t4:after {
+  z-index: 1;
+  content: "4";
+}
+.t8 {
+  z-index: 1;
+  background: #00ff62;
+}
+.t8:after {
+  z-index: 1;
+  content: "8";
+}
+.t16 {
+  z-index: 1;
+  background: #1cd604;
+}
+.t16:after {
+  z-index: 1;
+  content: "16";
+}
+.t32 {
+  z-index: 1;
+  background: rgb(64, 199, 159);
+}
+.t32:after {
+  z-index: 1;
+  content: "32";
+}
+.t64 {
+  z-index: 1;
+  background: rgb(60, 142, 175);
+}
+.t64:after {
+  z-index: 1;
+  content: "64";
+}
+.t128 {
+  z-index: 1;
+  background: #3b38f5c7;
+}
+.t128:after {
+  z-index: 1;
+  content: "128";
+}
+.t256 {
+  z-index: 1;
+  background: #a60efd;
+}
+.t256:after {
+  z-index: 1;
+  content: "256";
+}
+.t512 {
+  z-index: 1;
+  background: #b712d4;
+}
+.t512:after {
+  z-index: 1;
+  content: "512";
+}
+.t1024 {
+  z-index: 1;
+  background: #800179;
+  font-size: 36px;
+}
+.t1024:after {
+  z-index: 1;
+  content: "1024";
+}
+.t2048 {
+  z-index: 1;
+  background: #ad0051;
+  font-size: 36px;
+}
+.t2048:after {
+  z-index: 1;
+  content: "2048";
+}
+.start {
+  font-family: "Fredoka One", cursive;
+  position: absolute;
+  top: 20px;
+  left: 150px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 1px rgb(0, 0, 0, 0.6);
+}
+
+.start:active {
+  background-color: #85ff75c9;
+  box-shadow: 4px 4px 1px rgb(0, 0, 0, 0.6);
+  transform: translateY(4px);
+}
+.difference {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.container {
+  position: relative;
+  left: 30px;
+}
+.score {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.game-over {
+  position: absolute;
+  top: 99px;
+  left: 99px;
+  width: 402px;
+  height: 402px;
+  background: rgba(255, 244, 184, 0.85);
+  display: none;
+  z-index: 4;
+  font-family: "Fredoka One", cursive;
+}
+.hello{
+  font-family: "Fredoka One", cursive;
+  position: absolute;
+  font-size: 36px;
+  line-height: 60px;
+  text-align: center;
+  top:90px;
+}
+.hello__start{
+  font-size: 20px;
+}
+.start-again {
+  font-family: "Fredoka One", cursive;
+  position: absolute;
+  top: 270px;
+  left: 130px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 1px rgb(0, 0, 0, 0.6);
+}
+.win-or-lose-title {
+  font-size: 60px;
+  width: 400px;
+  position: absolute;
+  top: 100px;
+  text-align: center;
+}
+
+.game-over-score {
+  width: 100px;
+  position: relative;
+  font-family: "Fredoka One", cursive;
+  left: 120px;
+  display: flex;
+  font-size: 30px;
+  top: 50px;
+}
+.game-score {
+  width: 100px;
+  position: relative;
+  font-family: "Fredoka One", cursive;
+  left: 300px;
+  display: none;
+  font-size: 30px;
+}
+/* Анимация */
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.appear {
+  animation: appear 200ms ease;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+.pop {
+  z-index: 20;
+  animation: pop 400ms ease;
+}
+@keyframes move-up {
+  0% {
+    top: -10px;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    top: -30px;
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+.move-up {
+  animation: move-up 400ms ease;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    display: inline;
+  }
+
+  100% {
+    opacity: 1;
+    display: inline;
+  }
+}
+.fade-in {
+  animation: fade-in 3000ms ease;
+}
