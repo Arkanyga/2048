@@ -22,7 +22,7 @@ const scoreBlockFadeIn = 2000;
 const accessFlagTimeOut = 600;
 
 /** @const {Number} celltransition Время setTimeOut для передвижения клетки*/
-const celltransition = 5000;
+const celltransition = 200;
 
 /** @const {Number} deletePopClassTimeOut Время setTimeOut для удаления класса анимации pop(соединении двух одиновых клеток) и move-up(анимация разницы в score) */
 const deletePopClassTimeOut = 400;
@@ -331,96 +331,82 @@ class Grid {
     while (m < this.size) {
       for (let y = minY; y < maxY; y++) {
         for (let x = minX; x < maxX; x++) {
-          if (!this.rightDirectionGrid[y][x].isOpen && this.rightDirectionGrid[y + direction.y][x + direction.x].isOpen) {
-            let currentCell = this.rightDirectionGrid[y][x];
-            let nextCell = this.rightDirectionGrid[y + direction.y][x + direction.x];
+          let currentCell = this.rightDirectionGrid[y][x];
+          let nextCell = this.rightDirectionGrid[y + direction.y][x + direction.x];
+          if (!currentCell.isOpen && nextCell.isOpen) {
+
             currentCell.updateIsOpen(nextCell);
             this.hasMove = true;
           }
+          if (currentCell.value === nextCell.value && currentCell.value !== null && nextCell.value !== null && !nextCell.isCombine) {
+            currentCell.combineCells(nextCell)
+            this.hasMove = true;
+            this.score += currentCell.value;
+            differenceDOM.classList.add("move-up");
+            if (currentCell.value === 2048) {
+              this.isWin = true;
+              this.refreshScrore();
+            }
+          }
+
         }
       }
       m++;
     }
-    this.cellsForMoving = this.commonArr.filter(el => el.save.x !== el.x || el.save.y !== el.y);
-    console.log(1);
 
 
-    this.cellsForMoving.forEach(cell => {
-      cell.element.style.display = 'none';
-      //создаём элемент
-      // let previousX = cell.save.x;
-      // let previousY = cell.save.y;
-      // let previousValue = cell.value;
-      // let elementForMove = new Cell(previousY, previousX, false, previousValue);
-      // elementForMove.element.classList = cell.element.classList;
-      // elementForMove.translateX = cell.x - previousX;
-      // elementForMove.translateY = cell.y - previousY;
-      // console.log(2, elementForMove);
-      // elementForMove.element.style.transitionProperty = 'transform';
-      // elementForMove.element.style.transitionDuration = celltransition + 'ms';
-      // moveArr2.push(elementForMove);
-
-
-      console.log(cell);
-      //создаём элемент
-      let previousX = cell.save.x;
-      let previousY = cell.save.y;
-      let previousValue = cell.value;
-      const el = document.createElement("div");
-      el.className = `cell t${previousValue}`;
-      parentEl.appendChild(el);
-      el.style.top = `${previousY * 100}px`;
-      el.style.left = `${previousX * 100}px`;
-      el.style.transitionProperty = 'top, left';
-      el.style.transitionDuration = celltransition + 'ms';
-
-      cell.shell = el;
-
-      // setTimeout(() => {
-      //   el.style.top = cell.y * 100 + 'px';
-      //   el.style.left = cell.x * 100 + 'px';
-      //   console.log(el.style.top);
-
-      //   if (el.style.top === cell.y * 100 && el.style.left === cell.x * 100) {
-      //     cell.element.style.display = 'block';
-      //     el.remove();
-      //     cell.savePosition();
-      //   }
-      //   // el.style.transform = `translate(${el.translateX * 100}px, ${el.translateY * 100}px)`;
-      // }, 0)
-
-
-
-
-      // setTimeout(() => {
-      //   cell.element.style.display = 'block';
-      //   el.remove();
-      // }, celltransition + 100)
-      // cell.savePosition();
-    })
-
-
-    console.log(this.cellsForMoving);
-
-    this.forMoving()
-  }
-
-  forMoving() {
-    this.cellsForMoving.forEach(cell => {
-
-      setTimeout(() => {
-        cell.shell.style.top = cell.y * 100 + 'px';
-        cell.shell.style.left = cell.x * 100 + 'px';
-
-        // if (el.style.top === cell.y * 100 && el.style.left === cell.x * 100) {
-        //   cell.element.style.display = 'block';
-        //   el.remove();
-        //   cell.savePosition();
-        // }
-        // el.style.transform = `translate(${el.translateX * 100}px, ${el.translateY * 100}px)`;
-      }, 0)
+    this.commonArr.forEach(el => {
+      el.isCombine = false;
     })
   }
+
+  // //передвижение
+  // this.cellsForMoving = this.commonArr.filter(el => el.save.x !== el.x || el.save.y !== el.y);
+  // console.log(1);
+  // this.cellsForMoving.forEach(cell => {
+  //   cell.element.style.display = 'none';
+  //   console.log(cell);
+  //   //создаём элемент
+  //   let previousX = cell.save.x;
+  //   let previousY = cell.save.y;
+  //   let previousValue = cell.value;
+  //   const el = document.createElement("div");
+  //   el.className = `cell t${previousValue}`;
+  //   parentEl.appendChild(el);
+  //   el.style.top = `${previousY * 100}px`;
+  //   el.style.left = `${previousX * 100}px`;
+  //   el.style.transitionProperty = 'top, left';
+  //   el.style.transitionDuration = celltransition + 'ms';
+
+  //   setTimeout(() => {
+  //     el.style.top = cell.y * 100 + 'px';
+  //     el.style.left = cell.x * 100 + 'px';
+  //     console.log(el.style.top);
+
+  //     if (el.style.top === cell.y * 100 && el.style.left === cell.x * 100) {
+  //       cell.element.style.display = 'block';
+  //       el.remove();
+  //       cell.savePosition();
+  //     }
+  //   }, 0)
+
+
+
+
+  //   setTimeout(() => {
+  //     cell.element.style.display = 'block';
+  //     el.remove();
+  //   }, celltransition + 100)
+  //   cell.savePosition();
+  // })
+
+
+  // console.log(this.cellsForMoving);
+
+
+
+
+
   /**
     *отвеччает за соединение клеток на игровом поле, если было соединение клеток то устанавливает this.hasMove = true, так же проверяет isWin и при соединении клеток обновляет счёт
   */

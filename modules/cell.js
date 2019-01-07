@@ -26,12 +26,13 @@ class Cell {
     this.value = value || null;
     this.classAr = ["cell"];
     this.previousValue = null;
+    this.isCombine = false;
     this.element = this.createCell();
     this.save = {
       x: this.x,
       y: this.y
     };
-    this.shell;
+
   }
 
   /**
@@ -140,7 +141,9 @@ class Cell {
     this.isOpen = true;
     this.deleteClassAr();
     nextCell.deleteClassAr();
-    nextCell.addClassAr(["pop", `t${nextCell.value}`])
+    nextCell.addClassAr(["pop", `t${nextCell.value}`]);
+    nextCell.isCombine = true;
+    this.isCombine = true;
   }
 
   /**
